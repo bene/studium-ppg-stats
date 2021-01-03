@@ -15,7 +15,7 @@ const TopFive = () => {
   return (
     <div className="card shadow-sm mw-100 p-0">
       <div className="card-header text-center fw-bolder">
-        Die folgenen fünf Produkte haben die besten Durchschnittsbewertungen.
+        Die fünf Produkte mit den besten Durchschnittsbewertungen
       </div>
       <div className="card-body">
         <ChartWrapper label="# Sterne Durchschnitt" data={data} />

@@ -1,6 +1,6 @@
 const Products = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
-  const [chartType, setChartType] = React.useState("radar");
+  const [chartType, setChartType] = React.useState("bar");
 
   const [data, setData] = React.useState([]);
 
@@ -50,11 +50,11 @@ const Products = () => {
                 label="Anzahl der Bewertungen"
                 type={chartType}
                 data={{
-                  "5 Sterne": 3,
-                  "4 Sterne": 3,
-                  "3 Sterne": 3,
-                  "2 Sterne": 3,
-                  "1 Stern": 3,
+                  "5 Sterne": product.ratings[4],
+                  "4 Sterne": product.ratings[3],
+                  "3 Sterne": product.ratings[2],
+                  "2 Sterne": product.ratings[1],
+                  "1 Stern": product.ratings[0],
                 }}
               />
             </div>
@@ -81,7 +81,6 @@ const Products = () => {
           value={chartType}
           onChange={(e) => setChartType(e.target.value)}
         >
-          <option value="radar">Radar</option>
           <option value="pie">Torten</option>
           <option value="bar">Balken</option>
         </select>

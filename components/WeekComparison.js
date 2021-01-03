@@ -4,8 +4,8 @@ const WeekComparison = () => {
   React.useEffect(() => {
     // TODO: Get data
     setData({
-      currentWeek: [3, 1, 4, 6, 3],
-      lastWeek: [3, 1, 4, 6, 3],
+      currentWeek: [3, 6, 12, 13, 14],
+      lastWeek: [5, 4, 10, 13, 11],
     });
   }, [setData]);
 
