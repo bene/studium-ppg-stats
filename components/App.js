@@ -1,13 +1,26 @@
 const App = () => {
   const [tab, setTab] = React.useState(0);
 
+  // Set corresponding tab if anchor is set
+  React.useEffect(() => {
+    if (window.location.hash === "#top") {
+      setTab(0);
+    } else if (window.location.hash === "#products") {
+      setTab(1);
+    } else if (window.location.hash === "#week-comparison") {
+      setTab(2);
+    }
+  }, [setTab]);
+
   return (
     <div className="container mt-4 mb-5">
       <ul className="nav nav-pills nav-fill">
         <li className="nav-item">
           <a
-            href="#"
-            className={`nav-link${tab === 0 ? " active" : ""}`}
+            href="#top"
+            className={`nav-link ${
+              tab === 0 ? "active bg-secondary" : "text-secondary"
+            }`}
             onClick={() => setTab(0)}
           >
             Top 5 Produkte
@@ -15,8 +28,10 @@ const App = () => {
         </li>
         <li className="nav-item">
           <a
-            href="#"
-            className={`nav-link${tab === 1 ? " active" : ""}`}
+            href="#products"
+            className={`nav-link ${
+              tab === 1 ? "active bg-secondary" : "text-secondary"
+            }`}
             onClick={() => setTab(1)}
           >
             Detailansicht
@@ -24,8 +39,10 @@ const App = () => {
         </li>
         <li className="nav-item">
           <a
-            href="#"
-            className={`nav-link${tab === 2 ? " active" : ""}`}
+            href="#week-comparison"
+            className={`nav-link ${
+              tab === 2 ? "active bg-secondary" : "text-secondary"
+            }`}
             onClick={() => setTab(2)}
           >
             Wochenvergleich
@@ -40,6 +57,13 @@ const App = () => {
       ) : tab === 2 ? (
         <WeekComparison />
       ) : undefined}
+
+      <hr />
+
+      <div className="d-flex justify-content-between">
+        <p>&copy; 2021</p>
+        <p>Personalized Photo Gifts</p>
+      </div>
     </div>
   );
 };

@@ -1,16 +1,11 @@
 const WeekComparison = () => {
   const [data, setData] = React.useState({});
-  const chartCurrentWeek = React.useRef(null);
-  const chartLastWeek = React.useRef(null);
 
   React.useEffect(() => {
     // TODO: Get data
     setData({
-      "Produkt 1": 4.9,
-      "Produkt 2": 3.4,
-      "Produkt 3": 3.3,
-      "Produkt 4": 3.2,
-      "Produkt 5": 2.1,
+      currentWeek: [3, 1, 4, 6, 3],
+      lastWeek: [3, 1, 4, 6, 3],
     });
   }, [setData]);
 
@@ -23,7 +18,21 @@ const WeekComparison = () => {
             {moment().endOf("isoWeek").format("LL")})
           </div>
           <div className="card-body">
-            <canvas ref={chartCurrentWeek} width="400" height="200"></canvas>
+            <ChartWrapper
+              label="Anzahl der Bewertungen"
+              type="bar"
+              data={
+                !!data.currentWeek
+                  ? {
+                      "5 Sterne": data.currentWeek[4],
+                      "4 Sterne": data.currentWeek[3],
+                      "3 Sterne": data.currentWeek[2],
+                      "2 Sterne": data.currentWeek[1],
+                      "1 Stern": data.currentWeek[0],
+                    }
+                  : null
+              }
+            />
           </div>
         </div>
       </div>
@@ -36,7 +45,21 @@ const WeekComparison = () => {
             {moment().subtract(1, "weeks").endOf("isoWeek").format("LL")})
           </div>
           <div className="card-body">
-            <canvas ref={chartLastWeek} width="400" height="200"></canvas>
+            <ChartWrapper
+              label="Anzahl der Bewertungen"
+              type="bar"
+              data={
+                !!data.lastWeek
+                  ? {
+                      "5 Sterne": data.lastWeek[4],
+                      "4 Sterne": data.lastWeek[3],
+                      "3 Sterne": data.lastWeek[2],
+                      "2 Sterne": data.lastWeek[1],
+                      "1 Stern": data.lastWeek[0],
+                    }
+                  : null
+              }
+            />
           </div>
         </div>
       </div>
