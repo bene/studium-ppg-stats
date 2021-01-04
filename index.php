@@ -7,7 +7,10 @@
  *  Author: Allerberger
  */
 
+require_once "api.php";
+
 add_action("admin_menu", "init_menu");
+add_action("rest_api_init", "init_api");
 
 function init_menu()
 {

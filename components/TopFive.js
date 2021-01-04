@@ -1,18 +1,28 @@
 const TopFive = () => {
   const [data, setData] = React.useState();
+  const [hasError, setHasError] = React.useState(false);
 
   React.useEffect(() => {
-    // TODO: Get data
-    setData({
-      "Produkt 1": 4.9,
-      "Produkt 2": 3.4,
-      "Produkt 3": 3.3,
-      "Produkt 4": 3.2,
-      "Produkt 5": 2.1,
-    });
-  }, [setData]);
+    fetch("/wp-json/ppg-stats/v1/top-products")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Invalid response.");
+        }
 
-  return (
+        return res.json();
+      })
+      .then((data) => setData(data))
+      .catch((err) => {
+        setHasError(true);
+        console.log(err);
+      });
+  }, [setData, setHasError]);
+
+  return !hasError && !data ? (
+    <Spinner />
+  ) : hasError ? (
+    <Error />
+  ) : (
     <div className="card shadow-sm mw-100 p-0">
       <div className="card-header text-center fw-bolder">
         Die fünf Produkte mit den besten Durchschnittsbewertungen

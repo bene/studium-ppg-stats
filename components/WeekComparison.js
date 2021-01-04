@@ -1,15 +1,28 @@
 const WeekComparison = () => {
-  const [data, setData] = React.useState({});
+  const [data, setData] = React.useState();
+  const [hasError, setHasError] = React.useState(false);
 
   React.useEffect(() => {
-    // TODO: Get data
-    setData({
-      currentWeek: [3, 6, 12, 13, 14],
-      lastWeek: [5, 4, 10, 13, 11],
-    });
-  }, [setData]);
+    fetch("/wp-json/ppg-stats/v1/week-comparison")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Invalid response.");
+        }
 
-  return (
+        return res.json();
+      })
+      .then((data) => setData(data))
+      .catch((err) => {
+        setHasError(true);
+        console.log(err);
+      });
+  }, [setData, setHasError]);
+
+  return !hasError && !data ? (
+    <Spinner />
+  ) : hasError ? (
+    <Error />
+  ) : (
     <div className="row row-cols-2">
       <div className="col">
         <div className="card shadow-sm mw-100 p-0">

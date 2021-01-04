@@ -1,16 +1,11 @@
 const App = () => {
-  const [tab, setTab] = React.useState(0);
-
-  // Set corresponding tab if anchor is set
-  React.useEffect(() => {
-    if (window.location.hash === "#top") {
-      setTab(0);
-    } else if (window.location.hash === "#products") {
-      setTab(1);
-    } else if (window.location.hash === "#week-comparison") {
-      setTab(2);
-    }
-  }, [setTab]);
+  const [tab, setTab] = React.useState(
+    window.location.hash === "#products"
+      ? 1
+      : window.location.hash === "#week-comparison"
+      ? 2
+      : 0
+  );
 
   return (
     <div className="container mt-4 mb-5">

@@ -13,6 +13,8 @@
 <script src="<?php echo plugin_dir_url(__DIR__) .
     "/ppg-stats/components/Spinner.js"; ?>" type="text/babel"></script>
 <script src="<?php echo plugin_dir_url(__DIR__) .
+    "/ppg-stats/components/Error.js"; ?>" type="text/babel"></script>
+<script src="<?php echo plugin_dir_url(__DIR__) .
     "/ppg-stats/components/ChartWrapper.js"; ?>" type="text/babel"></script>
 <script src="<?php echo plugin_dir_url(__DIR__) .
     "/ppg-stats/components/Products.js"; ?>" type="text/babel"></script>
@@ -29,7 +31,6 @@
 
 <!-- Root element for React -->
 <div id="ppg-react-root">
-
   <!-- As long as React is loading, a spinner will be shown -->
   <div class="d-flex w-100 my-5 py-5">
     <div class="spinner-border my-auto mx-auto" role="status">

@@ -1,21 +1,49 @@
 <?php
-add_action("rest_api_init", "register_rest_route");
 
-register_rest_route("ppg-stats/v1", "/action/", [
-    "methods" => WP_REST_Server::READABLE,
-    "callback" => "api_method",
-]);
-
-function api_method($data)
+function init_api()
 {
-    $data = ["foo" => "bar"];
-
-    $response = new WP_REST_Response($data, 200);
-
-    // Set headers.
-    $response->set_headers([
-        "Cache-Control" => "must-revalidate, no-cache, no-store, private",
+    register_rest_route("ppg-stats/v1", "/product-ratings", [
+        "methods" => "GET",
+        "callback" => "get_product_rating",
     ]);
 
-    return $response;
+    register_rest_route("ppg-stats/v1", "/top-products", [
+        "methods" => "GET",
+        "callback" => "get_top_products",
+    ]);
+
+    register_rest_route("ppg-stats/v1", "/week-comparison", [
+        "methods" => "GET",
+        "callback" => "get_week_comparison",
+    ]);
+}
+
+function get_product_rating($data)
+{
+    global $wpdb;
+    $results = $wpdb->get_results(
+        "SELECT * FROM $wpdb->posts WHERE `post_type`='post' LIMIT 4"
+    );
+
+    return json_encode($results);
+}
+
+function get_top_products($data)
+{
+    global $wpdb;
+    $results = $wpdb->get_results(
+        "SELECT * FROM $wpdb->posts WHERE `post_type`='post' LIMIT 4"
+    );
+
+    return json_encode($results);
+}
+
+function get_week_comparison($data)
+{
+    global $wpdb;
+    $results = $wpdb->get_results(
+        "SELECT * FROM $wpdb->posts WHERE `post_type`='post' LIMIT 4"
+    );
+
+    return json_encode($results);
 }
