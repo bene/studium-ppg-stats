@@ -1,3 +1,6 @@
+const HOME_URL =
+  "https://wi-project.technikum-wien.at/s20/s20-bvz2-fst-16/wordpress";
+
 const Products = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [chartType, setChartType] = React.useState("bar");
@@ -6,7 +9,7 @@ const Products = () => {
   const [hasError, setHasError] = React.useState(false);
 
   React.useEffect(() => {
-    fetch("/wp-json/ppg-stats/v1/product-ratings")
+    fetch(`${HOME_URL}/wp-json/ppg-stats/v1/product-ratings`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Invalid response.");
@@ -23,27 +26,31 @@ const Products = () => {
 
   const items =
     !!data &&
-    data
-      .filter((product) =>
-        !searchQuery ? true : product.name.includes(searchQuery)
+    Object.keys(data)
+      .filter((productName) =>
+        !searchQuery
+          ? true
+          : productName.toLowerCase().includes(searchQuery.toLowerCase())
       )
-      .map((product) => {
+      .map((productName) => {
+        const ratings = data[productName];
+
         return (
-          <div key={product.name} className="col">
+          <div key={productName} className="col">
             <div className="card shadow-sm mw-100 p-0">
               <div className="card-header text-center fw-bolder">
-                {product.name}
+                {productName}
               </div>
               <div className="card-body">
                 <ChartWrapper
                   label="Anzahl der Bewertungen"
                   type={chartType}
                   data={{
-                    "5 Sterne": product.ratings[4],
-                    "4 Sterne": product.ratings[3],
-                    "3 Sterne": product.ratings[2],
-                    "2 Sterne": product.ratings[1],
-                    "1 Stern": product.ratings[0],
+                    "5 Sterne": ratings[4],
+                    "4 Sterne": ratings[3],
+                    "3 Sterne": ratings[2],
+                    "2 Sterne": ratings[1],
+                    "1 Stern": ratings[0],
                   }}
                 />
               </div>

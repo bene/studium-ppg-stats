@@ -1,9 +1,12 @@
+const HOME_URL =
+  "https://wi-project.technikum-wien.at/s20/s20-bvz2-fst-16/wordpress";
+
 const TopFive = () => {
   const [data, setData] = React.useState();
   const [hasError, setHasError] = React.useState(false);
 
   React.useEffect(() => {
-    fetch("/wp-json/ppg-stats/v1/top-products")
+    fetch(`${HOME_URL}/wp-json/ppg-stats/v1/top-products`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Invalid response.");
