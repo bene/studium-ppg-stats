@@ -23,7 +23,7 @@ function get_product_rating($data)
 {
     global $wpdb;
     $results = $wpdb->get_results(
-        "SELECT `post_title` AS `product_name`, `meta_value` AS `rating`, `comment_date` FROM `wp_commentmeta` INNER JOIN `wp_comments` ON `wp_commentmeta`.`comment_id`=`wp_comments`.`comment_ID` INNER JOIN `wp_posts` ON `comment_post_ID`=`ID` WHERE `comment_type`=\"review\" GROUP BY `wp_comments`.`comment_id`"
+        "SELECT `post_title` AS `product_name`, `meta_value` AS `rating` FROM `wp_commentmeta` INNER JOIN `wp_comments` ON `wp_commentmeta`.`comment_id`=`wp_comments`.`comment_ID` INNER JOIN `wp_posts` ON `comment_post_ID`=`ID` WHERE `comment_type`=\"review\" GROUP BY `wp_comments`.`comment_id`"
     );
 
     $response = [];
@@ -57,9 +57,25 @@ function get_top_products($data)
 function get_week_comparison($data)
 {
     global $wpdb;
-    $results = $wpdb->get_results(
-        "SELECT `post_title` AS `product_name`, `meta_value` AS `rating`, `comment_date` FROM `wp_commentmeta` INNER JOIN `wp_comments` ON `wp_commentmeta`.`comment_id`=`wp_comments`.`comment_ID` INNER JOIN `wp_posts` ON `comment_post_ID`=`ID` WHERE `comment_type`=\"review\" GROUP BY `wp_comments`.`comment_id`"
+    $resultsCurrentWeek = $wpdb->get_results(
+        "SELECT `meta_value` AS `rating` FROM `wp_commentmeta` INNER JOIN `wp_comments` ON `wp_commentmeta`.`comment_id`=`wp_comments`.`comment_ID` WHERE `comment_type`=\"review\" AND YEARWEEK(`comment_date`, 1) = YEARWEEK(CURDATE(), 1) GROUP BY `wp_comments`.`comment_id`"
     );
 
-    return json_encode($results);
+    $resultsLastWeek = $wpdb->get_results(
+        "SELECT `meta_value` AS `rating` FROM `wp_commentmeta` INNER JOIN `wp_comments` ON `wp_commentmeta`.`comment_id`=`wp_comments`.`comment_ID` WHERE `comment_type`=\"review\" AND YEARWEEK(`comment_date`, 1) = YEARWEEK(CURDATE() - INTERVAL 7 DAY, 1) GROUP BY `wp_comments`.`comment_id`"
+    );
+
+    $response = [];
+    $response["currentWeek"] = [0, 0, 0, 0, 0];
+    $response["lastWeek"] = [0, 0, 0, 0, 0];
+
+    foreach ($resultsCurrentWeek as &$rating) {
+        $response["currentWeek"][5 - 5] = $response["currentWeek"][5 - 5] + 1;
+    }
+
+    foreach ($resultsLastWeek as &$rating) {
+        $response["lastWeek"][5 - 5] = $response["lastWeek"][5 - 5] + 1;
+    }
+
+    return $response;
 }

@@ -3,7 +3,7 @@
  *  @wordpress-plugin
  *  Plugin Name: PPG Review Stats
  *  Description: Ermöglicht es Bewertungen graphisch auszuwerten.
- *  Version: 1.2
+ *  Version: 2.0
  *  Author: Allerberger
  */
 
