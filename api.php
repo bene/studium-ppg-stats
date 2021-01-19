@@ -70,11 +70,11 @@ function get_week_comparison($data)
     $response["lastWeek"] = [0, 0, 0, 0, 0];
 
     foreach ($resultsCurrentWeek as &$rating) {
-        $response["currentWeek"][5 - 5] = $response["currentWeek"][5 - 5] + 1;
+        $response["currentWeek"][5 - $rating] = $response["currentWeek"][5 - $rating] + 1;
     }
 
     foreach ($resultsLastWeek as &$rating) {
-        $response["lastWeek"][5 - 5] = $response["lastWeek"][5 - 5] + 1;
+        $response["lastWeek"][5 - $rating] = $response["lastWeek"][5 - $rating] + 1;
     }
 
     return $response;

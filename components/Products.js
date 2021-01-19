@@ -46,11 +46,11 @@ const Products = () => {
                   label="Anzahl der Bewertungen"
                   type={chartType}
                   data={{
-                    "5 Sterne": ratings[4],
-                    "4 Sterne": ratings[3],
+                    "5 Sterne": ratings[0],
+                    "4 Sterne": ratings[1],
                     "3 Sterne": ratings[2],
-                    "2 Sterne": ratings[1],
-                    "1 Stern": ratings[0],
+                    "2 Sterne": ratings[3],
+                    "1 Stern": ratings[4],
                   }}
                 />
               </div>
